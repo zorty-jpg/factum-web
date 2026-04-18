@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# dev-iteration screenshots (root-level only — public/images stays tracked)
+/*.png
+/*.jpg
+
+# original uncompressed source video (the 14MB compressed /public/factum-loop.mp4 is what ships)
+/video/

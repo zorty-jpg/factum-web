@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --black: #0a0a0a;
+  --white: #f9f9f9;
+  --red: #bf0404;
+
+  --space-s: 0.5rem;
+  --space-m: 1rem;
+  --space-l: 2rem;
+  --space-xl: 4rem;
+  --space-xxl: 8rem;
+
+  --time-0: 0.3s;
+  --time-1: 1s;
+  --time-2: 2s;
+
+  --eas-eo: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --eas-ei: cubic-bezier(0.75, 0.1, 0.75, 1);
+  --eas-io: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-black: var(--black);
+  --color-white: var(--white);
+  --color-red: var(--red);
+  --font-sans: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  --font-serif: "Times New Roman", Times, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--red);
+  color: var(--white);
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.link-underline {
+  position: relative;
+  transition: color var(--time-0) var(--eas-eo);
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right center;
+  transform: scaleX(0);
+  transition: transform var(--time-0) var(--eas-eo);
+}
+.link-underline:hover {
+  color: var(--red);
+}
+.link-underline:hover::after {
+  transform-origin: left center;
+  transform: scaleX(1);
+  background: var(--red);
 }
