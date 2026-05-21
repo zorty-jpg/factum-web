@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { m } from "framer-motion";
 import { Star } from "lucide-react";
 import { reviews, reviewSummary, type Review } from "@/lib/content";
@@ -30,10 +31,12 @@ function ReviewCard({ review }: { review: Review }) {
     >
       {/* Photo header */}
       <div className="relative h-40 overflow-hidden">
-        <img
+        <Image
           src={review.image}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+          alt={`${review.discipline} training at Factum`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
         />
         <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute top-4 left-4">

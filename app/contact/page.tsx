@@ -1,10 +1,14 @@
+import type { Metadata } from "next";
 import Reveal from "../components/Reveal";
 import { announcements } from "@/lib/content";
 import { fullAddress, site } from "@/lib/site";
 import { formatDate } from "@/lib/utils";
+import ContactForm from "./ContactForm";
 
-export const metadata = {
-  title: "Contact — Factum",
+export const metadata: Metadata = {
+  title: "Contact",
+  description: `Visit Factum at ${fullAddress}. Email ${site.email} or send a note — first class is free.`,
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
@@ -84,24 +88,18 @@ export default function ContactPage() {
             Follow
           </p>
           <ul className="mt-4 flex flex-wrap items-center gap-6 text-[13px] uppercase tracking-[0.14em]">
-            {site.socials.map((s) =>
-              s.url ? (
-                <li key={s.name}>
-                  <a
-                    href={s.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link-underline"
-                  >
-                    {s.name}
-                  </a>
-                </li>
-              ) : (
-                <li key={s.name} className="text-white/30">
+            {site.socials.map((s) => (
+              <li key={s.name}>
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-underline"
+                >
                   {s.name}
-                </li>
-              ),
-            )}
+                </a>
+              </li>
+            ))}
           </ul>
         </Reveal>
 
@@ -110,63 +108,21 @@ export default function ContactPage() {
           delay={0.1}
           className="col-span-12 md:col-span-7 mt-12 md:mt-0"
         >
-          <form className="flex flex-col gap-8 max-w-[560px]">
-            <p className="text-[11px] uppercase tracking-[0.14em] text-white/50">
-              Or send a note
-            </p>
-
-            <label className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.14em] text-white/50">
-                Name
-              </span>
-              <input
-                type="text"
-                className="bg-transparent border-b border-white/30 py-2 text-[18px] md:text-[20px] outline-none focus:border-red transition-colors"
-                placeholder="Your name"
-              />
-            </label>
-
-            <label className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.14em] text-white/50">
-                Email
-              </span>
-              <input
-                type="email"
-                className="bg-transparent border-b border-white/30 py-2 text-[18px] md:text-[20px] outline-none focus:border-red transition-colors"
-                placeholder="you@email.com"
-              />
-            </label>
-
-            <label className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.14em] text-white/50">
-                Message
-              </span>
-              <textarea
-                rows={4}
-                className="bg-transparent border-b border-white/30 py-2 text-[18px] md:text-[20px] outline-none focus:border-red transition-colors resize-none"
-                placeholder="What do you want to train?"
-              />
-            </label>
-
-            <button
-              type="button"
-              className="self-start mt-4 text-[11px] uppercase tracking-[0.14em] link-underline"
-            >
-              Send message →
-            </button>
-          </form>
+          <ContactForm />
         </Reveal>
       </section>
 
       <section className="mt-20 md:mt-28 px-6 md:px-12">
         <Reveal>
-          <div
-            aria-hidden
-            className="w-full aspect-[16/5] bg-white/5 border border-white/10 flex items-center justify-center"
-          >
-            <span className="text-[11px] uppercase tracking-[0.14em] text-white/30">
-              Map placeholder — {fullAddress}
-            </span>
+          <div className="w-full aspect-[16/5] bg-white/5 border border-white/10 overflow-hidden">
+            <iframe
+              title={`Map of ${site.name}`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-full grayscale contrast-110"
+              allowFullScreen
+            />
           </div>
         </Reveal>
       </section>

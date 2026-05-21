@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -11,6 +11,8 @@ type RevealProps = {
   once?: boolean;
   className?: string;
   as?: "div" | "section" | "article" | "li" | "header" | "p";
+  onMouseEnter?: MouseEventHandler<HTMLElement>;
+  onMouseLeave?: MouseEventHandler<HTMLElement>;
 };
 
 const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
@@ -23,6 +25,8 @@ export default function Reveal({
   once = true,
   className,
   as = "div",
+  onMouseEnter,
+  onMouseLeave,
 }: RevealProps) {
   const MotionTag = m[as];
   return (
@@ -32,6 +36,8 @@ export default function Reveal({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once, amount: 0.25, margin: "0px 0px -10% 0px" }}
       transition={{ duration, delay, ease: EASE }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </MotionTag>

@@ -21,12 +21,14 @@ const ICON_MAP: Record<Discipline["icon"], LucideIcon> = {
 export default function DisciplineIcon({
   name,
   size = 20,
+  strokeWidth = 1.5,
   className,
 }: {
   name: Discipline["icon"];
   size?: number;
+  strokeWidth?: number;
   className?: string;
 }) {
   const Icon = ICON_MAP[name];
-  return <Icon size={size} strokeWidth={1.5} className={className} aria-hidden />;
+  return <Icon size={size} strokeWidth={strokeWidth} className={className} aria-hidden />;
 }

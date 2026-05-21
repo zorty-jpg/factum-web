@@ -1,0 +1,15 @@
+# Original uncompressed source video — /public/factum-loop.mp4 is the one that ships
+/video/
+
+# Dev-iteration screenshots at project root (public/images stays included)
+/*.png
+/*.jpg
+
+# Build artifacts
+/.next/cache
+*.tsbuildinfo
+
+# Local env files
+.env
+.env.*
+!.env.example

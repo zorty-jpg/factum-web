@@ -144,18 +144,6 @@ export default function Footer() {
           const iconWrap =
             "flex items-center justify-center w-7 h-7 rounded-full bg-white/5 shrink-0";
 
-          if (!s.url) {
-            return (
-              <li key={s.name} className="opacity-40">
-                <span className={`${pill} text-white/70`}>
-                  <span className={iconWrap}>
-                    <Icon size={13} />
-                  </span>
-                  {s.name}
-                </span>
-              </li>
-            );
-          }
           return (
             <li key={s.name}>
               <a

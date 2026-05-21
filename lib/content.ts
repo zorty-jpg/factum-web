@@ -1,3 +1,9 @@
+export const pricing = {
+  monthly: 99.99,
+  weeksPerMonth: 4.33,
+  dropInRate: 25,
+} as const;
+
 export type Discipline = {
   slug: string;
   name: string;
@@ -109,7 +115,7 @@ export const coaches: Coach[] = [
   },
   {
     slug: "bjj-coach",
-    name: "BJJ Coach",
+    name: "Jiu Jitsu Coach",
     role: "Jiu Jitsu",
     bio: "Placeholder bio. Black belt, focused on positional understanding and safe rolling for every level.",
   },
@@ -138,11 +144,11 @@ export type ScheduleEntry = {
 
 const weekday = (day: string): ScheduleEntry[] => [
   { day, time: "05:15", title: "Functional Fitness", type: "Functional" },
-  { day, time: "06:15", title: "FF + Boxing", type: "Boxing" },
+  { day, time: "06:15", title: "Functional Fitness + Boxing", type: "Boxing" },
   { day, time: "12:00", title: "Functional Fitness", type: "Functional" },
   { day, time: "15:15", title: "Boxing", type: "Boxing" },
-  { day, time: "16:15", title: "FF + Boxing", type: "Boxing" },
-  { day, time: "17:15", title: "FF + Boxing", type: "Boxing" },
+  { day, time: "16:15", title: "Functional Fitness + Boxing", type: "Boxing" },
+  { day, time: "17:15", title: "Functional Fitness + Boxing", type: "Boxing" },
   { day, time: "18:15", title: "Muay Thai · MMA · Boxing Sparring", type: "MMA" },
   { day, time: "19:15", title: "Muay Thai · Kickboxing", type: "Muay Thai" },
   { day, time: "20:15", title: "MMA", type: "MMA" },
@@ -162,7 +168,7 @@ export const weeklySchedule: ScheduleEntry[] = [
       : e,
   ),
   { day: "Fri", time: "05:15", title: "Functional Fitness", type: "Functional" },
-  { day: "Fri", time: "06:15", title: "FF + Boxing", type: "Boxing" },
+  { day: "Fri", time: "06:15", title: "Functional Fitness + Boxing", type: "Boxing" },
   { day: "Fri", time: "12:00", title: "Functional Fitness", type: "Functional" },
   { day: "Fri", time: "16:15", title: "Beginner Boxing", type: "Boxing" },
   { day: "Fri", time: "17:15", title: "Beginner Boxing", type: "Boxing" },
@@ -171,27 +177,6 @@ export const weeklySchedule: ScheduleEntry[] = [
   { day: "Sat", time: "09:00", title: "Functional Fitness", type: "Functional" },
   { day: "Sat", time: "10:00", title: "Muay Thai Practice", type: "Muay Thai" },
   { day: "Sat", time: "11:00", title: "Muay Thai Sparring", type: "Muay Thai" },
-];
-
-export type PricingTier = {
-  name: string;
-  price: string;
-  period: string;
-  perks: string[];
-};
-
-export const pricing: PricingTier[] = [
-  {
-    name: "Membership",
-    price: "$99.99",
-    period: "per month",
-    perks: [
-      "Unlimited classes across every discipline",
-      "Open gym access during staffed hours",
-      "Month-to-month — cancel any time, no hidden fees",
-      "First day free, walk-in welcome",
-    ],
-  },
 ];
 
 export type Review = {
@@ -205,57 +190,55 @@ export type Review = {
   image: string;
 };
 
-// Placeholder testimonials — tone + structure match Factum's real Google reviews.
-// Swap `text`, `name`, and `date` with verbatim Google/Facebook reviews once collected.
+// Verbatim reviews pulled from Factum's public Google + Groupon listings.
 export const reviews: Review[] = [
   {
     id: "r-1",
-    name: "Marcus T.",
-    initials: "MT",
+    name: "Grayson",
+    initials: "G",
     rating: 5,
-    text: "Walked in nervous, left already knowing my coach's name. No ego, no fluff — just real technique. Been training six months.",
-    discipline: "Boxing",
-    date: "2026-02-14",
-    image: "/images/gym/boxing-2.jpg",
+    text: "Amazing gym, all the coaches are very supportive, and friendly. They offer a variety of classes and the coaches do an incredible job of making the classes educational, fun, and rewarding. I would 100% recommend this gym to anyone wanting to try Boxing, Jiu Jitsu, or MMA.",
+    discipline: "MMA",
+    date: "2025-09-15",
+    image: "/images/gym/mma-1.jpg",
   },
   {
     id: "r-2",
-    name: "Sarah K.",
-    initials: "SK",
+    name: "Alex Lucero",
+    initials: "AL",
     rating: 5,
-    text: "The Muay Thai class changed how I move. Pad work is legit Thailand-style. Saturday sparring is the highlight of my week.",
-    discipline: "Muay Thai",
-    date: "2026-01-22",
-    image: "/images/gym/muay-thai-3.jpg",
+    text: "I have been coming to Factum (specifically for CrossFit) for just over one year. This gym is amazing. The coaches are all excellent and I have learned so much from them. I have made so many friends and find it to be an extremely welcoming community.",
+    discipline: "Functional Fitness",
+    date: "2022-04-10",
+    image: "/images/gym/functional-1.jpg",
   },
   {
     id: "r-3",
-    name: "Devon R.",
-    initials: "DR",
+    name: "China",
+    initials: "CH",
     rating: 5,
-    text: "Two-hour BJJ blocks are rare. Coaches explain the why behind every position. Rolled my first tournament after four months here.",
-    discipline: "Jiu Jitsu",
-    date: "2025-12-08",
-    image: "/images/gym/jiu-jitsu-3.jpg",
+    text: "I can't say enough about how awesome this gym is. The staff and participants are all so friendly and willing to help. My teen daughter absolutely loves going — it's her first experience with boxing and she loved it the first day.",
+    discipline: "Boxing",
+    date: "2024-07-18",
+    image: "/images/gym/boxing-1.jpg",
   },
   {
     id: "r-4",
-    name: "Alex P.",
-    initials: "AP",
+    name: "Mike",
+    initials: "M",
     rating: 5,
-    text: "Came for cardio, stayed because the functional fitness programming actually makes sense. SugarWod tracking keeps me honest.",
-    discipline: "Functional Fitness",
-    date: "2025-11-30",
-    image: "/images/gym/functional-1.jpg",
+    text: "Excellent gym and staff. I hesitate to give an honest review because I don't want it to get too busy — but Factum is the best value and the best instructors I've found in Salt Lake or Davis County.",
+    discipline: "Boxing",
+    date: "2024-05-02",
+    image: "/images/gym/boxing-2.jpg",
   },
 ];
 
 export const reviewSummary = {
-  average: 4.9,
-  count: 127,
+  average: 4.7,
+  count: 119,
   source: "Google Reviews",
-  // Swap this when the gym provides the live Google Business profile link.
-  url: "https://www.google.com/search?q=factum+mma+sandy+utah",
+  url: "https://www.google.com/search?q=Factum+Functional+Fitness+Boxing+Jiu+Jitsu+Kickboxing+Midvale",
 } as const;
 
 export type Announcement = {

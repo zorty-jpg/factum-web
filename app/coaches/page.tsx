@@ -1,8 +1,12 @@
+import type { Metadata } from "next";
 import Reveal from "../components/Reveal";
 import { coaches } from "@/lib/content";
 
-export const metadata = {
-  title: "Coaches — Factum",
+export const metadata: Metadata = {
+  title: "Coaches",
+  description:
+    "The coaching staff behind Factum — combat athletes and trainers leading classes in Sandy, Utah.",
+  alternates: { canonical: "/coaches" },
 };
 
 export default function CoachesPage() {

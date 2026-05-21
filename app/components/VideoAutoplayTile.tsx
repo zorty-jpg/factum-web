@@ -1,33 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Play, X } from "lucide-react";
+import { X } from "lucide-react";
 import { AnimatePresence, m } from "framer-motion";
 
-type VideoLightboxProps = {
-  /** YouTube video ID (11-char) or full youtu.be/youtube.com URL. */
+type VideoAutoplayTileProps = {
   videoId: string;
-  /** Poster image path, e.g. "/images/gym/boxing-1.jpg". */
-  poster: string;
-  /** Caption shown under the thumbnail. */
   label: string;
   aspectRatio?: string;
 };
 
 function extractYoutubeId(input: string): string {
   if (input.length === 11 && !input.includes("/")) return input;
-  const match = input.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  const match = input.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/,
+  );
   return match?.[1] ?? input;
 }
 
-export default function VideoLightbox({
+export default function VideoAutoplayTile({
   videoId,
-  poster,
   label,
-  aspectRatio = "16/9",
-}: VideoLightboxProps) {
+  aspectRatio = "4/3",
+}: VideoAutoplayTileProps) {
   const [open, setOpen] = useState(false);
   const id = extractYoutubeId(videoId);
+
+  const inlineSrc = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&iv_load_policy=3&fs=0`;
+  const fullSrc = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
 
   useEffect(() => {
     if (!open) return;
@@ -47,26 +47,27 @@ export default function VideoLightbox({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group relative block w-full overflow-hidden border border-white/10 text-left"
+        aria-label={`Play ${label} with sound`}
+        className="group relative block w-full overflow-hidden text-left bg-black"
         style={{ aspectRatio }}
       >
-        <img
-          src={poster}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-        />
-        <span className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/95 text-black transition-transform group-hover:scale-110">
-            <Play size={22} strokeWidth={2} className="translate-x-0.5" aria-hidden />
-          </span>
-        </span>
-        <span className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+        {/* Inline silent loop — scaled up to mask YouTube chrome */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <iframe
+            src={inlineSrc}
+            title={label}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            loading="lazy"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] border-0"
+          />
+        </div>
+        <span className="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors" />
+        <span className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-10">
           <span className="text-[11px] uppercase tracking-[0.14em] text-white/95">
             {label}
           </span>
           <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
-            Watch
+            Play ↗
           </span>
         </span>
       </button>
@@ -101,7 +102,7 @@ export default function VideoLightbox({
               onClick={(e) => e.stopPropagation()}
             >
               <iframe
-                src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`}
+                src={fullSrc}
                 title={label}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

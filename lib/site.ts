@@ -16,7 +16,6 @@ export const site = {
     { name: "Instagram", handle: "@factumgym", url: "https://www.instagram.com/factumgym/" },
     { name: "Facebook", handle: "TeamFactum", url: "https://facebook.com/TeamFactum" },
     { name: "YouTube", handle: "@factumutah", url: "https://www.youtube.com/channel/UCLjVbvdqxoN6Xfeg3z4bRRQ" },
-    { name: "Vimeo", handle: null, url: null },
   ],
   apps: {
     sugarwod: "https://www.sugarwod.com/",

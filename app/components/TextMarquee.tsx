@@ -28,17 +28,15 @@ export default function TextMarquee({
   accent,
 }: TextMarqueeProps) {
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (items.length <= 1 || paused) return;
-    // Longest channel is y at 1.3 * transition, so a full cycle waits that long.
-    const total = (hold + transition * 1.3) * 1000;
+    if (items.length <= 1) return;
+    const total = (hold + transition) * 1000;
     const id = setInterval(() => {
       setI((p) => (p + 1) % items.length);
     }, total);
     return () => clearInterval(id);
-  }, [items.length, hold, transition, paused]);
+  }, [items.length, hold, transition]);
 
   const currentHref = hrefs?.[i];
   const interactive = Boolean(hrefs?.length);
@@ -50,8 +48,6 @@ export default function TextMarquee({
         interactive && "cursor-pointer",
         className,
       )}
-      onMouseEnter={() => interactive && setPaused(true)}
-      onMouseLeave={() => interactive && setPaused(false)}
     >
       {/* Invisible sizer */}
       <span
@@ -70,16 +66,16 @@ export default function TextMarquee({
 
       {/* Animated overlay */}
       <span className="absolute inset-0 overflow-hidden">
-        <AnimatePresence>
+        <AnimatePresence mode="wait" initial={false}>
           <m.span
             key={i}
             initial={{ y: "105%", opacity: 0, filter: "blur(12px)" }}
             animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
             exit={{ y: "-105%", opacity: 0, filter: "blur(12px)" }}
             transition={{
-              y: { duration: transition * 1.3, ease: "linear" },
+              y: { duration: transition, ease: [0.33, 1, 0.68, 1] },
               opacity: { duration: transition * 0.8, ease: [0.33, 1, 0.68, 1] },
-              filter: { duration: transition * 1.1, ease: [0.33, 1, 0.68, 1] },
+              filter: { duration: transition, ease: [0.33, 1, 0.68, 1] },
             }}
             className="block whitespace-nowrap will-change-[transform,filter,opacity]"
             style={accent ? { color: accent } : undefined}

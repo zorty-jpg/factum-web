@@ -9,7 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 export function formatTime(hhmm: string): string {
   const [hStr, mStr] = hhmm.split(":");
   const h = Number(hStr);
-  const m = Number(mStr);
   const period = h >= 12 ? "pm" : "am";
   const hour12 = ((h + 11) % 12) + 1;
   return `${hour12}:${mStr.padStart(2, "0")} ${period}`;
