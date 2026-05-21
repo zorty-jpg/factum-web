@@ -63,7 +63,7 @@ export default function ClassesPage() {
 
       {/* Videos — inline autoplaying grid at the bottom */}
       <section className="mt-24 md:mt-32 px-6 md:px-12 pb-20">
-        <Reveal className="grid grid-cols-12 gap-x-10 mb-10 md:mb-14">
+        <Reveal className="grid grid-cols-12 gap-x-4 md:gap-x-10 mb-10 md:mb-14">
           <div className="col-span-12 md:col-span-4">
             <p className="text-[13px] text-white/45">Watch a class</p>
           </div>

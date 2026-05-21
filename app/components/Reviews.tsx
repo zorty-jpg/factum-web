@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { m } from "framer-motion";
-import { Star } from "lucide-react";
+import { m, AnimatePresence } from "framer-motion";
+import { Star, ChevronDown } from "lucide-react";
+import { useState } from "react";
 import { reviews, reviewSummary, type Review } from "@/lib/content";
 import { formatDate } from "@/lib/utils";
 import Reveal from "./Reveal";
@@ -20,6 +21,72 @@ function Stars({ count, size = 14 }: { count: number; size?: number }) {
         />
       ))}
     </div>
+  );
+}
+
+function MobileReviewPill({
+  review,
+  expanded,
+  onToggle,
+}: {
+  review: Review;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <m.div
+      layout
+      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+      className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md"
+    >
+      <button
+        onClick={onToggle}
+        aria-expanded={expanded}
+        className="w-full flex items-center justify-between gap-3 p-4 text-left"
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="flex shrink-0 items-center justify-center w-11 h-11 rounded-full bg-white/5 border border-white/15 text-[12px] font-medium tracking-[0.04em]">
+            {review.initials}
+          </span>
+          <div className="min-w-0 flex flex-col gap-1">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-[14px] font-medium text-white truncate">
+                {review.name}
+              </span>
+              <Stars count={review.rating} size={11} />
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.14em] text-white/45 truncate">
+              {review.discipline} · {formatDate(review.date, "medium")}
+            </span>
+          </div>
+        </div>
+        <m.span
+          animate={{ rotate: expanded ? 180 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="shrink-0 text-white/50"
+        >
+          <ChevronDown size={18} strokeWidth={1.75} />
+        </m.span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <m.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="px-4 pb-4 pt-1">
+              <p className="text-[14px] leading-[1.55] text-white/85">
+                &ldquo;{review.text}&rdquo;
+              </p>
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
+    </m.div>
   );
 }
 
@@ -74,9 +141,11 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 export default function Reviews() {
+  const [openId, setOpenId] = useState<string | null>(null);
+
   return (
-    <section className="relative z-10 mt-40 md:mt-56 px-6 md:px-14">
-      <Reveal className="grid grid-cols-12 gap-x-10">
+    <section className="relative z-10 mt-20 md:mt-56 px-6 md:px-14">
+      <Reveal className="grid grid-cols-12 gap-x-4 md:gap-x-10">
         <div className="col-span-12 md:col-span-4">
           <p className="text-[13px] text-white/45">From the gym floor</p>
         </div>
@@ -100,7 +169,22 @@ export default function Reviews() {
         </div>
       </Reveal>
 
-      <Reveal delay={0.1} className="mt-12 md:mt-16">
+      {/* Mobile — collapsed glass pills, tap to expand */}
+      <Reveal delay={0.1} className="mt-8 md:hidden">
+        <div className="flex flex-col gap-2">
+          {reviews.map((r) => (
+            <MobileReviewPill
+              key={r.id}
+              review={r}
+              expanded={openId === r.id}
+              onToggle={() => setOpenId(openId === r.id ? null : r.id)}
+            />
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Desktop — full card grid */}
+      <Reveal delay={0.1} className="hidden md:block md:mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {reviews.map((r) => (
             <ReviewCard key={r.id} review={r} />

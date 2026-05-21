@@ -12,9 +12,10 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="self-start mt-4 text-[11px] uppercase tracking-[0.14em] link-underline disabled:opacity-50 disabled:cursor-not-allowed"
+      className="self-start mt-4 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md px-7 py-3.5 text-[12px] uppercase tracking-[0.14em] text-white hover:bg-white/[0.08] hover:border-white/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
     >
-      {pending ? "Sending…" : "Send message →"}
+      {pending ? "Sending…" : "Send message"}
+      {!pending && <span aria-hidden>→</span>}
     </button>
   );
 }

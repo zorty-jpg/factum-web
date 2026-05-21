@@ -34,7 +34,8 @@ function TubePill({ mobile = false }: { mobile?: boolean }) {
   return (
     <div
       className={cn(
-        "flex items-center gap-1 bg-white/[0.04] border border-white/10 backdrop-blur-lg py-1 px-1 rounded-full shadow-lg",
+        "flex items-center bg-white/[0.04] border border-white/10 backdrop-blur-lg rounded-full shadow-lg",
+        mobile ? "gap-1.5 py-1.5 px-1.5" : "gap-1 py-1 px-1",
       )}
     >
       {navItems.map((item) => {
@@ -50,13 +51,13 @@ function TubePill({ mobile = false }: { mobile?: boolean }) {
             href={item.url}
             className={cn(
               "relative cursor-pointer text-[11px] font-medium uppercase tracking-[0.14em] rounded-full transition-colors",
-              mobile ? "px-3 py-2" : "px-5 py-2",
+              mobile ? "px-5 py-3.5" : "px-5 py-2",
               "text-white/60 hover:text-white",
               isActive && "text-white",
             )}
           >
             {mobile ? (
-              <Icon size={18} strokeWidth={1.75} aria-label={item.name} />
+              <Icon size={24} strokeWidth={1.75} aria-label={item.name} />
             ) : (
               <span>{item.name}</span>
             )}
@@ -72,7 +73,7 @@ function TubePill({ mobile = false }: { mobile?: boolean }) {
                   className={cn(
                     "absolute left-1/2 -translate-x-1/2 rounded-full",
                     mobile
-                      ? "-bottom-1.5 w-8 h-[2px]"
+                      ? "-bottom-2 w-12 h-[2px]"
                       : "-top-1.5 w-10 h-[2px]",
                   )}
                   style={{

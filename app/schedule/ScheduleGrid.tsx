@@ -202,16 +202,16 @@ function computeStatuses(
 
 function FilterChips({ active }: { active: FilterSlug }) {
   return (
-    <ul className="flex flex-wrap gap-2">
+    <ul className="flex gap-2 overflow-x-auto md:flex-wrap md:overflow-visible -mx-6 px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
       {FILTERS.map((f) => {
         const isActive = f.slug === active;
         return (
-          <li key={f.slug}>
+          <li key={f.slug} className="shrink-0">
             <Link
               href={hrefFor(f.slug)}
               scroll={false}
               className={cn(
-                "inline-block border rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[0.14em] transition-all duration-300",
+                "inline-block border rounded-full px-4 py-2.5 md:py-1.5 text-[11px] uppercase tracking-[0.14em] transition-all duration-300 whitespace-nowrap",
                 isActive
                   ? "bg-white text-black border-white"
                   : "border-white/15 text-white/70 hover:border-white/50 hover:text-white",
@@ -417,9 +417,11 @@ function ClassRow({
   return (
     <li
       className={cn(
-        "grid grid-cols-[auto_1fr] md:grid-cols-[200px_auto_1fr_auto] items-center gap-4 md:gap-10 py-6 md:py-8 border-b border-white/10 first:border-t transition-colors",
+        "grid grid-cols-[auto_1fr] md:grid-cols-[200px_auto_1fr_auto] items-center gap-4 md:gap-10 transition-colors",
+        "rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md px-4 py-5 mb-2",
+        "md:rounded-none md:border-0 md:border-b md:border-white/10 md:bg-transparent md:backdrop-blur-none md:px-0 md:py-8 md:mb-0 md:first:border-t",
         isPast && "opacity-40",
-        status === "now" && "bg-white/[0.02]",
+        status === "now" && "bg-white/[0.08] md:bg-white/[0.02]",
       )}
     >
       <span
@@ -610,7 +612,80 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
       </Reveal>
 
       <Reveal delay={0.05}>
-        <div className="grid grid-cols-7 gap-px bg-white/10 border border-white/10">
+        {/* Mobile — horizontal scroll strip of glass day pills */}
+        <div className="md:hidden -mx-6 px-6 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-2 pb-1">
+            {DAYS.map((day) => {
+              const count = dayCounts.get(day) ?? 0;
+              const disabled = count === 0;
+              const isActive = day === effectiveDay;
+              const isToday = day === today;
+              const date = dateForDayInCurrentWeek(day, now);
+              const dayNum = String(date.getDate()).padStart(2, "0");
+              return (
+                <button
+                  key={day}
+                  type="button"
+                  onClick={() => setSelectedDay(day)}
+                  disabled={disabled}
+                  aria-pressed={isActive}
+                  className={cn(
+                    "shrink-0 relative flex flex-col items-center gap-1 px-5 py-3.5 rounded-2xl border backdrop-blur-md transition-colors min-w-[68px]",
+                    isActive
+                      ? "bg-white text-black border-white"
+                      : disabled
+                        ? "bg-white/[0.02] text-white/20 border-white/5 cursor-not-allowed"
+                        : "bg-white/[0.04] text-white/75 border-white/10 active:bg-white/[0.08]",
+                  )}
+                >
+                  {isToday && !isActive && (
+                    <span
+                      className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full"
+                      style={{ background: "var(--red)" }}
+                      aria-label="Today"
+                    />
+                  )}
+                  <span
+                    className={cn(
+                      "text-[10px] uppercase tracking-[0.18em]",
+                      isActive ? "text-black/60" : "text-white/50",
+                    )}
+                  >
+                    {day}
+                  </span>
+                  <span className="text-[24px] font-semibold leading-none tabular-nums">
+                    {dayNum}
+                  </span>
+                </button>
+              );
+            })}
+            {(() => {
+              const date = sundayDate(now);
+              const dayNum = String(date.getDate()).padStart(2, "0");
+              const isTodaySun = new Date().getDay() === 0;
+              return (
+                <div className="shrink-0 relative flex flex-col items-center gap-1 px-5 py-3.5 rounded-2xl border border-white/5 bg-white/[0.02] text-white/25 min-w-[68px]">
+                  {isTodaySun && (
+                    <span
+                      className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full"
+                      style={{ background: "var(--red)" }}
+                      aria-label="Today"
+                    />
+                  )}
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-white/30">
+                    Sun
+                  </span>
+                  <span className="text-[24px] font-semibold leading-none tabular-nums">
+                    {dayNum}
+                  </span>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+
+        {/* Desktop — 7-col grid with rich day tiles */}
+        <div className="hidden md:grid grid-cols-7 gap-px bg-white/10 border border-white/10">
           {DAYS.map((day) => {
             const classes = byDay.get(day) ?? [];
             return (

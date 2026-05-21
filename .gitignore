@@ -45,5 +45,8 @@ next-env.d.ts
 /*.png
 /*.jpg
 
+# mobile audit working artifacts
+/audit-screenshots/
+
 # original uncompressed source video (the 14MB compressed /public/factum-loop.mp4 is what ships)
 /video/

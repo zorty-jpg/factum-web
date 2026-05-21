@@ -17,7 +17,7 @@ export default function DisciplineList({
   const active = disciplines.find((d) => d.slug === hovered);
 
   return (
-    <div className="grid grid-cols-12 gap-x-10">
+    <div className="grid grid-cols-12 gap-x-4 md:gap-x-10">
       {/* Left column — labels + hover preview */}
       <div className="col-span-12 md:col-span-4 relative">
         <div className="flex flex-col gap-6">
@@ -77,24 +77,29 @@ export default function DisciplineList({
             >
               <Link
                 href={`/classes#${d.slug}`}
-                className="group flex items-center justify-between gap-6 py-5 md:py-7 transition-opacity duration-300"
+                className="group flex items-center justify-between gap-4 md:gap-6 py-5 md:py-7 transition-opacity duration-300"
                 style={{ opacity: isDimmed ? 0.35 : 1 }}
               >
-                <span className="flex items-center gap-5 md:gap-7">
+                <span className="flex items-center gap-4 md:gap-7 min-w-0">
                   <DisciplineIcon
                     name={d.icon}
                     size={22}
                     className={
                       isActive
-                        ? "text-white transition-colors"
-                        : "text-white/55 group-hover:text-white transition-colors"
+                        ? "text-white transition-colors shrink-0"
+                        : "text-white/55 group-hover:text-white transition-colors shrink-0"
                     }
                   />
-                  <span className="text-[32px] md:text-[48px] leading-[1.1] tracking-[-0.01em]">
-                    {d.name}
+                  <span className="flex flex-col gap-1 md:gap-0 min-w-0">
+                    <span className="text-[28px] md:text-[48px] leading-[1.05] md:leading-[1.1] tracking-[-0.01em]">
+                      {d.name}
+                    </span>
+                    <span className="md:hidden text-[10px] uppercase tracking-[0.14em] text-white/45">
+                      {d.tags[0]}
+                    </span>
                   </span>
                 </span>
-                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/70 transition-colors whitespace-nowrap">
+                <span className="hidden md:inline text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/70 transition-colors whitespace-nowrap">
                   {d.tags[0]}
                 </span>
               </Link>

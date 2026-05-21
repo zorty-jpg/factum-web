@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full">
+      <body className="min-h-full pb-[calc(env(safe-area-inset-bottom)+7rem)] md:pb-0">
         <MotionProvider>
           <Nav />
           {children}

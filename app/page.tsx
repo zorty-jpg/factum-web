@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main className="relative w-full min-h-screen bg-black text-white overflow-hidden">
       {/* Hero background video */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[95vh] z-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-svh md:h-[95vh] z-0 overflow-hidden">
         <video
           src="/factum-loop.mp4"
           autoPlay
@@ -56,15 +56,15 @@ export default function Home() {
       )}
 
       {/* Hero headline */}
-      <section className="relative z-10 pt-24 md:pt-40 px-6 md:px-10">
+      <section className="relative z-10 px-6 md:px-10 md:pt-40 min-h-svh md:min-h-0 flex flex-col justify-end pb-[calc(env(safe-area-inset-bottom)+8rem)] md:block md:pb-0">
         <HeroStagger
-          className="font-sans font-bold uppercase text-white leading-[0.9] tracking-[-0.05em] text-[52px] sm:text-[120px] md:text-[180px]"
+          className="font-sans font-bold uppercase text-white leading-[0.9] tracking-[-0.05em] text-[44px] sm:text-[120px] md:text-[180px]"
           lines={["Factum //", "Your gym for"]}
         />
 
         <Reveal
           delay={0.7}
-          className="mt-1 md:mt-2 font-sans font-bold uppercase text-white leading-[0.9] tracking-[-0.05em] text-[52px] sm:text-[120px] md:text-[180px]"
+          className="mt-1 md:mt-2 font-sans font-bold uppercase text-white leading-[0.9] tracking-[-0.05em] text-[44px] sm:text-[120px] md:text-[180px]"
         >
           <TextMarquee
             items={[
@@ -103,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* First class free — primary CTA */}
-      <section className="relative z-10 mt-16 md:mt-56 px-6 md:px-14">
+      <section className="relative z-10 mt-32 md:mt-56 px-6 md:px-14">
         <Reveal className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-16">
           <h2 className="text-[36px] md:text-[72px] leading-[0.95] tracking-[-0.02em] max-w-[680px]">
             Your first class is on us.
@@ -134,7 +134,7 @@ export default function Home() {
 
       {/* Classes overview — intro + imagery strip + list */}
       <section className="relative z-10 mt-40 md:mt-56 px-6 md:px-14">
-        <Reveal className="grid grid-cols-12 gap-x-10">
+        <Reveal className="grid grid-cols-12 gap-x-4 md:gap-x-10">
           <div className="col-span-12 md:col-span-4">
             <p className="text-[13px] text-white/45">Our classes</p>
           </div>
@@ -188,7 +188,7 @@ export default function Home() {
 
       {/* Statement + review pill */}
       <section className="relative z-10 mt-40 md:mt-48 px-6 md:px-14 pt-14 border-t border-white/10">
-        <Reveal className="grid grid-cols-12 gap-x-10">
+        <Reveal className="grid grid-cols-12 gap-x-4 md:gap-x-10">
           <div className="col-span-12 md:col-span-4">
             <p className="text-[13px] text-white/45">The gym</p>
           </div>

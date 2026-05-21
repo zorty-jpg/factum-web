@@ -9,7 +9,7 @@ export default function ReviewPill() {
       href={reviewSummary.url}
       target="_blank"
       rel="noreferrer"
-      className="group flex w-[580px] items-center justify-between border border-white/15 bg-white/[0.04] backdrop-blur-sm rounded-full pl-2 pr-5 py-2 hover:border-white/30 transition-colors"
+      className="group flex w-full max-w-[580px] items-center justify-between gap-3 border border-white/15 bg-white/[0.04] backdrop-blur-sm rounded-full pl-2 pr-5 py-2 hover:border-white/30 transition-colors"
     >
       <div className="flex -space-x-1.5">
         {avatars.map((r) => (

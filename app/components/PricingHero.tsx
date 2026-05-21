@@ -43,7 +43,7 @@ export default function PricingHero() {
   return (
     <section className="pt-40 px-6 md:px-12">
       {/* Headline + price — claims full viewport on load to keep savings calc below the fold */}
-      <div className="grid grid-cols-12 gap-x-10 md:min-h-[calc(100svh-220px)] md:items-center">
+      <div className="grid grid-cols-12 gap-x-4 md:gap-x-10 md:min-h-[calc(100svh-220px)] md:items-center">
         <div className="col-span-12 md:col-span-6">
           <Reveal>
             <p className="text-[13px] text-white/45">Membership</p>
@@ -115,7 +115,7 @@ export default function PricingHero() {
       <div className="mt-16 md:mt-24 border-t border-white/10" />
 
       {/* Savings — 4/8 split, glassy red-tinted card */}
-      <div className="mt-10 md:mt-14 grid grid-cols-12 gap-x-10">
+      <div className="mt-10 md:mt-14 grid grid-cols-12 gap-x-4 md:gap-x-10">
         <div className="col-span-12 md:col-span-4">
           <Reveal>
             <p className="text-[13px] text-white/45">Savings</p>

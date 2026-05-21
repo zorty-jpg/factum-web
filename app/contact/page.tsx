@@ -17,7 +17,7 @@ export default function ContactPage() {
   return (
     <main className="relative min-h-screen bg-black text-white">
       <section className="pt-40 px-6 md:px-12">
-        <Reveal className="grid grid-cols-12 gap-x-10">
+        <Reveal className="grid grid-cols-12 gap-x-4 md:gap-x-10">
           <div className="col-span-12 md:col-span-4">
             <p className="text-[13px] text-white/45">Contact</p>
           </div>
@@ -38,7 +38,7 @@ export default function ContactPage() {
 
       {event && (
         <section className="mt-20 md:mt-28 px-6 md:px-12">
-          <Reveal className="grid grid-cols-12 gap-x-10 py-8 border-t border-white/10">
+          <Reveal className="grid grid-cols-12 gap-x-4 md:gap-x-10 py-8 border-t border-white/10">
             <div className="col-span-12 md:col-span-4">
               <p className="text-[11px] uppercase tracking-[0.14em]" style={{ color: "var(--red)" }}>
                 Upcoming event
@@ -57,7 +57,7 @@ export default function ContactPage() {
         </section>
       )}
 
-      <section className="mt-12 md:mt-20 px-6 md:px-12 grid grid-cols-12 gap-x-10 border-t border-white/10 pt-14">
+      <section className="mt-12 md:mt-20 px-6 md:px-12 grid grid-cols-12 gap-x-4 md:gap-x-10 border-t border-white/10 pt-14">
         <Reveal className="col-span-12 md:col-span-5">
           <p className="text-[11px] uppercase tracking-[0.14em] text-white/50">
             Location
@@ -114,7 +114,7 @@ export default function ContactPage() {
 
       <section className="mt-20 md:mt-28 px-6 md:px-12">
         <Reveal>
-          <div className="w-full aspect-[16/5] bg-white/5 border border-white/10 overflow-hidden">
+          <div className="w-full aspect-square md:aspect-[16/5] rounded-2xl md:rounded-none bg-white/5 border border-white/10 overflow-hidden">
             <iframe
               title={`Map of ${site.name}`}
               src={`https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`}
