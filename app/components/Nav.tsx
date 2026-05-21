@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -125,11 +126,16 @@ export default function Nav() {
 
       {/* Mobile — minimal top (brand + red pill CTA) */}
       <header className="md:hidden fixed top-4 left-0 right-0 px-5 z-[100] flex items-center justify-between pointer-events-none">
-        <Link
-          href="/"
-          className="pointer-events-auto text-[12px] lowercase tracking-[0.04em] text-white/80"
-        >
-          factum
+        <Link href="/" className="pointer-events-auto inline-block" aria-label="Factum">
+          <Image
+            src="/factum-gradient.png"
+            alt="Factum"
+            width={300}
+            height={154}
+            priority
+            sizes="120px"
+            className="h-7 w-auto"
+          />
         </Link>
         <Link
           href="/contact"
