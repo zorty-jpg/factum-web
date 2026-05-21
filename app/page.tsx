@@ -100,10 +100,33 @@ export default function Home() {
             <div className="mt-3">UT / US / EN</div>
           </div>
         </Reveal>
+
+        {/* Mobile — first-class CTA lives inside the hero, right under the marquee */}
+        <Reveal delay={1} className="md:hidden mt-8">
+          <h2 className="text-[26px] leading-[1] tracking-[-0.02em] max-w-[320px]">
+            Your first class is on us.
+          </h2>
+          <Link
+            href="/contact"
+            className="group mt-5 inline-flex w-full items-center justify-between gap-4 rounded-full py-2 pl-6 pr-2 text-white text-[15px] uppercase tracking-[0.1em] font-semibold shadow-[0_10px_40px_-12px_rgba(191,4,4,0.8)]"
+            style={{ backgroundColor: "var(--red)" }}
+          >
+            <span>Claim your free class</span>
+            <span
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-white text-[18px] transition-transform group-hover:translate-x-1"
+              style={{ color: "var(--red)" }}
+            >
+              →
+            </span>
+          </Link>
+          <p className="mt-3 text-[12px] text-white/70 max-w-[340px] leading-[1.5]">
+            Walk in any day. Wraps, gloves, and coaching included — no signup, no pressure.
+          </p>
+        </Reveal>
       </section>
 
-      {/* First class free — primary CTA */}
-      <section className="relative z-10 mt-32 md:mt-56 px-6 md:px-14">
+      {/* Desktop — standalone first-class CTA section */}
+      <section className="hidden md:block relative z-10 md:mt-56 md:px-14">
         <Reveal className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-16">
           <h2 className="text-[36px] md:text-[72px] leading-[0.95] tracking-[-0.02em] max-w-[680px]">
             Your first class is on us.

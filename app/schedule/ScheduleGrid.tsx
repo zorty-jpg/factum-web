@@ -402,9 +402,11 @@ function StatusPill({ status }: { status: "now" | "next" }) {
 function ClassRow({
   entry,
   status,
+  id,
 }: {
   entry: ScheduleEntry;
   status: ClassStatus;
+  id?: string;
 }) {
   const timeText = entry.endTime
     ? `${formatTime(entry.time)} – ${formatTime(entry.endTime)}`
@@ -416,8 +418,9 @@ function ClassRow({
 
   return (
     <li
+      id={id}
       className={cn(
-        "grid grid-cols-[auto_1fr] md:grid-cols-[200px_auto_1fr_auto] items-center gap-4 md:gap-10 transition-colors",
+        "grid grid-cols-[auto_1fr] md:grid-cols-[200px_auto_1fr_auto] items-center gap-4 md:gap-10 transition-colors scroll-mt-32",
         "rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md px-4 py-5 mb-2",
         "md:rounded-none md:border-0 md:border-b md:border-white/10 md:bg-transparent md:backdrop-blur-none md:px-0 md:py-8 md:mb-0 md:first:border-t",
         isPast && "opacity-40",
@@ -602,6 +605,15 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
     [effectiveDay, today, now, dayClasses],
   );
 
+  const focusedIdx = useMemo(() => {
+    const nowIdx = statuses.findIndex((s) => s === "now");
+    if (nowIdx >= 0) return nowIdx;
+    const nextIdx = statuses.findIndex((s) => s === "next");
+    return nextIdx >= 0 ? nextIdx : -1;
+  }, [statuses]);
+  const focusedEntry = focusedIdx >= 0 ? dayClasses[focusedIdx] : null;
+  const focusedStatus = focusedIdx >= 0 ? statuses[focusedIdx] : null;
+
   return (
     <>
       <Reveal className="mb-10 md:mb-14">
@@ -706,6 +718,59 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
       </Reveal>
 
       <div className="mt-12 md:mt-16">
+        {/* Mobile sticky banner — quick jump to current/next class */}
+        {focusedEntry && effectiveDay === today && (
+          <div className="md:hidden sticky top-[68px] z-30 mb-3">
+            <button
+              type="button"
+              onClick={() => {
+                document
+                  .getElementById(`class-${focusedIdx}`)
+                  ?.scrollIntoView({ behavior: "smooth", block: "center" });
+              }}
+              className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-black/80 backdrop-blur-xl px-4 py-3 active:scale-[0.98] transition-transform shadow-lg"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <span
+                  className={cn(
+                    "shrink-0 w-2 h-2 rounded-full",
+                    focusedStatus === "now" && "animate-pulse",
+                  )}
+                  style={{
+                    background:
+                      focusedStatus === "now"
+                        ? "var(--red)"
+                        : "rgba(255,255,255,0.9)",
+                  }}
+                />
+                <div className="flex flex-col items-start min-w-0 text-left">
+                  <span
+                    className="text-[9px] uppercase tracking-[0.18em]"
+                    style={{
+                      color:
+                        focusedStatus === "now"
+                          ? "var(--red)"
+                          : "rgba(255,255,255,0.5)",
+                    }}
+                  >
+                    {focusedStatus === "now" ? "Happening now" : "Next class"}
+                  </span>
+                  <span className="text-[13px] font-semibold text-white truncate">
+                    {formatTime(focusedEntry.time)} ·{" "}
+                    {TYPE_LABEL[focusedEntry.type]} · {focusedEntry.title}
+                  </span>
+                </div>
+              </div>
+              <span
+                className="shrink-0 text-white/50 text-[14px]"
+                aria-hidden
+              >
+                ↓
+              </span>
+            </button>
+          </div>
+        )}
+
         <AnimatePresence mode="wait">
           <m.div
             key={`${active}-${effectiveDay}`}
@@ -737,6 +802,7 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
                 {dayClasses.map((e, i) => (
                   <ClassRow
                     key={`${e.day}-${e.time}-${e.title}-${i}`}
+                    id={`class-${i}`}
                     entry={e}
                     status={statuses[i] ?? "future"}
                   />
