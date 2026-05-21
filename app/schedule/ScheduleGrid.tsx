@@ -718,9 +718,9 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
       </Reveal>
 
       <div className="mt-12 md:mt-16">
-        {/* Mobile sticky banner — quick jump to current/next class */}
+        {/* Sticky banner — quick jump to current/next class */}
         {focusedEntry && effectiveDay === today && (
-          <div className="md:hidden sticky top-[68px] z-30 mb-3">
+          <div className="sticky top-[68px] md:top-24 z-30 mb-3 md:mb-5">
             <button
               type="button"
               onClick={() => {
@@ -728,7 +728,7 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
                   .getElementById(`class-${focusedIdx}`)
                   ?.scrollIntoView({ behavior: "smooth", block: "center" });
               }}
-              className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-black/80 backdrop-blur-xl px-4 py-3 active:scale-[0.98] transition-transform shadow-lg"
+              className="w-full flex items-center justify-between gap-3 md:gap-5 rounded-2xl border border-white/15 bg-black/80 backdrop-blur-xl px-4 md:px-6 py-3 md:py-4 active:scale-[0.98] md:hover:bg-black/85 md:hover:border-white/25 transition-all shadow-lg"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <span
@@ -745,7 +745,7 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
                 />
                 <div className="flex flex-col items-start min-w-0 text-left">
                   <span
-                    className="text-[9px] uppercase tracking-[0.18em]"
+                    className="text-[9px] md:text-[10px] uppercase tracking-[0.18em]"
                     style={{
                       color:
                         focusedStatus === "now"
@@ -755,14 +755,14 @@ function ScheduleGridInner({ entries }: { entries: ScheduleEntry[] }) {
                   >
                     {focusedStatus === "now" ? "Happening now" : "Next class"}
                   </span>
-                  <span className="text-[13px] font-semibold text-white truncate">
+                  <span className="text-[13px] md:text-[15px] font-semibold text-white truncate">
                     {formatTime(focusedEntry.time)} ·{" "}
                     {TYPE_LABEL[focusedEntry.type]} · {focusedEntry.title}
                   </span>
                 </div>
               </div>
               <span
-                className="shrink-0 text-white/50 text-[14px]"
+                className="shrink-0 text-white/50 text-[14px] md:text-[16px]"
                 aria-hidden
               >
                 ↓
